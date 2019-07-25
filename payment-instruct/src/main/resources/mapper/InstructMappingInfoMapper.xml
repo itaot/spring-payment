@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.itaot.payment.dao.InstructMappingInfDao">
+
+    <select id="getInstructMappingXml" parameterType="InstructMappingInf" resultType="InstructMappingInf">
+      select sys_code,sub_sys_code,src_field,dest_field from sp_instruct_mapping_info
+        where sys_code = #{sysCode,jdbcType=VARCHAR}
+        and sub_sys_code = #{subSysCode,jdbcType=VARCHAR}
+        and instruct_code = #{instructCode,jdbcType=VARCHAR}
+　　</select>
+</mapper>

@@ -1,0 +1,25 @@
+drop table sp_merchant_info;
+create table sp_merchant_info (
+  mer_id        varchar(10),
+  mer_name      varchar(100),
+  register_time timestamp,
+  status        varchar(1),
+  sign_type     varchar(10),
+  key           varchar(100),
+  logout_time   timestamp,
+  document_type varchar(2),
+  document_id   varchar(50),
+  privileges    varchar(20)
+) tablespace sp_data;
+
+comment on table sp_merchant_info is '商户信息表';
+COMMENT ON COLUMN sp_merchant_info.mer_id IS '商户号';
+COMMENT ON COLUMN sp_merchant_info.mer_name IS '商户名称';
+COMMENT ON COLUMN sp_merchant_info.key IS '密钥key';
+COMMENT ON COLUMN sp_merchant_info.register_time IS '注册时间';
+COMMENT ON COLUMN sp_merchant_info.logout_time IS '注销时间';
+COMMENT ON COLUMN sp_merchant_info.status is '状态 0-正常 9-注销';
+COMMENT ON COLUMN sp_merchant_info.sign_type is '签名类型';
+COMMENT ON COLUMN sp_merchant_info.document_type is '证件类型';
+COMMENT ON COLUMN sp_merchant_info.document_id is '证件号码';
+COMMENT ON COLUMN sp_merchant_info.privileges is '权限,0:无权限 1:有权限  依次为:代付、代扣';

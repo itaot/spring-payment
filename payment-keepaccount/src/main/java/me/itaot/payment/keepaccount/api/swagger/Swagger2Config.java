@@ -1,0 +1,60 @@
+package me.itaot.payment.keepaccount.api.swagger;
+
+import com.google.common.base.Predicate;
+import com.mangofactory.swagger.plugin.EnableSwagger;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Controller;
+import springfox.documentation.RequestHandler;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.web.UiConfiguration;
+
+
+@Configuration
+@EnableSwagger
+public class Swagger2Config {
+
+    @Bean
+    public Docket createRestApi() {
+
+        Predicate<RequestHandler> predicate = new Predicate<RequestHandler>() {
+
+            @Override
+            public boolean apply(RequestHandler requestHandler) {
+                Class<?> declaringClass = requestHandler.declaringClass();
+                if (declaringClass.isAnnotationPresent(Controller.class))    //被注解的类
+                    return false;
+                return true;
+            }
+        };
+
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("me.itaot"))
+                .paths(PathSelectors.any())
+                .apis(predicate)
+                .build();
+    }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("Spring-Payment")
+                .description("账务模块")
+                .termsOfServiceUrl("https://github.com/itaot/spring-payment.git")
+                .version("0.0.1-SNAPSHOT")
+                .build();
+
+    }
+
+    @Bean
+    UiConfiguration uiConfig() {
+        return new UiConfiguration(null, "list", "alpha", "schema",
+                UiConfiguration.Constants.DEFAULT_SUBMIT_METHODS, false, true, 60000L);
+    }
+}

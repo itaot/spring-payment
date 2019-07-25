@@ -1,0 +1,9 @@
+drop table sp_error;
+create table sp_error (
+  error_code    varchar(10),
+  error_message varchar(100)
+) tablespace sp_data;
+
+comment on table sp_error is '错误信息定义表';
+comment on column sp_error.error_code is '错误代码';
+comment on column sp_error.error_message is '错误描述';
